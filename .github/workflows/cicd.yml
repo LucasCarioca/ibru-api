@@ -1,0 +1,10 @@
+name: CICD
+on:
+  push:
+jobs:
+  ci:
+    uses: LucasCarioca/workflows/.github/workflows/ci-go.yml@v0.2.0
+  release:
+    needs: ci
+    if: github.ref == 'refs/heads/main'
+    uses: LucasCarioca/workflows/.github/workflows/release.yml@v0.3.0
