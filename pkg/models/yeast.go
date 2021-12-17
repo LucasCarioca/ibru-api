@@ -1,6 +1,6 @@
 package models
 
-//Guest model for the guest table
+//Yeast model for the yeast table
 type Yeast struct {
 	Base
 	Name         string `json:"name" binding:"required"`

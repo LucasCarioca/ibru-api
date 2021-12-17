@@ -7,4 +7,5 @@ import (
 //Init initializes all models and creates tables if not already present
 func Init(db *gorm.DB) {
 	db.AutoMigrate(&Yeast{})
+	db.AutoMigrate(&Sugar{})
 }

@@ -26,14 +26,29 @@ func NewYeastService() *YeastService {
 }
 
 //GetAllYeasts returns a list of all Yeasts
-func (s *YeastService) GetAllYeasts() []models.Yeast {
+func (s *YeastService) GetAllYeasts(approvedOnly bool) []models.Yeast {
 	yeasts := make([]models.Yeast, 0)
-	s.db.Preload(clause.Associations).Find(&yeasts)
+	if approvedOnly {
+		s.db.Preload(clause.Associations).Find(&yeasts, "approved = ?", approvedOnly)
+	} else {
+		s.db.Preload(clause.Associations).Find(&yeasts)
+	}
+	return yeasts
+}
+
+//GetAllYeastsByAuditId returns a list of all Yeasts by the audit id
+func (s *YeastService) GetAllYeastsByAuditId(approvedOnly bool, auditId string) []models.Yeast {
+	yeasts := make([]models.Yeast, 0)
+	if approvedOnly {
+		s.db.Preload(clause.Associations).Find(&yeasts, "approved = ? AND audit_id = ?", approvedOnly, auditId)
+	} else {
+		s.db.Preload(clause.Associations).Find(&yeasts, "audit_id = ?", auditId)
+	}
 	return yeasts
 }
 
 //CreateYeast creates a new Yeast and returns it
-func (s *YeastService) CreateYeast(name string, brand string, tolerance string, attenuation string, flocculation string, temperature string) models.Yeast {
+func (s *YeastService) CreateYeast(name string, brand string, tolerance string, attenuation string, flocculation string, temperature string, auditId string) models.Yeast {
 	y := &models.Yeast{
 		Name:         name,
 		Brand:        brand,
@@ -41,6 +56,7 @@ func (s *YeastService) CreateYeast(name string, brand string, tolerance string, 
 		Attenuation:  attenuation,
 		Flocculation: flocculation,
 		Temperature:  temperature,
+		Base:         models.Base{AuditId: auditId, Approved: false},
 	}
 	s.db.Create(y)
 	return *y

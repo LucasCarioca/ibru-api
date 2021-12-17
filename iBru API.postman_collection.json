@@ -6,12 +6,69 @@
 	},
 	"item": [
 		{
+			"name": "Get Sugars",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hostname}}/api/v1/sugars?approved=false&audit_id=12345",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"sugars"
+					],
+					"query": [
+						{
+							"key": "approved",
+							"value": "false"
+						},
+						{
+							"key": "audit_id",
+							"value": "12345"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Sugar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Sugar\",\n    \"gravity_per_pound\": 0.034,\n    \"audit_id\": \"12345\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostname}}/api/v1/sugars",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"sugars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get Yeasts",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{hostname}}/api/v1/yeasts",
+					"raw": "{{hostname}}/api/v1/yeasts?approved=false&audit_id=12345",
 					"host": [
 						"{{hostname}}"
 					],
@@ -19,6 +76,16 @@
 						"api",
 						"v1",
 						"yeasts"
+					],
+					"query": [
+						{
+							"key": "approved",
+							"value": "false"
+						},
+						{
+							"key": "audit_id",
+							"value": "12345"
+						}
 					]
 				}
 			},
@@ -45,33 +112,13 @@
 			"response": []
 		},
 		{
-			"name": "Delete Yeast By Id",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{hostname}}/api/v1/yeasts/1",
-					"host": [
-						"{{hostname}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"yeasts",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Create Yeasts",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"S-04\",\n    \"bramd\": \"Safale\",\n    \"tolerance\": \"9-1\",\n    \"attenuation\": \"74-82\",\n    \"flocculation\": \"medium-high\",\n    \"temperature\": \"65-70\"\n}",
+					"raw": "{\n    \"name\": \"S-04\",\n    \"brand\": \"Safale\",\n    \"tolerance\": \"9-1\",\n    \"attenuation\": \"74-82\",\n    \"flocculation\": \"medium-high\",\n    \"temperature\": \"65-70\",\n    \"audit_id\": \"12345\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -87,6 +134,26 @@
 						"api",
 						"v1",
 						"yeasts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Yeast By Id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{hostname}}/api/v1/yeasts/1",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"yeasts",
+						"1"
 					]
 				}
 			},

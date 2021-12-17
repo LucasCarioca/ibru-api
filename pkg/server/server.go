@@ -12,6 +12,7 @@ import (
 func routesInit(app *gin.Engine) {
 	routes.HealthRouter(app)
 	routes.NewYeastRouter(app)
+	routes.NewSugarRouter(app)
 }
 
 //Init initializes the service and attaches all routers
