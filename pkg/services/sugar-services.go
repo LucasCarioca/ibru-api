@@ -36,23 +36,23 @@ func (s *SugarService) GetAllSugars(approvedOnly bool) []models.Sugar {
 	return sugars
 }
 
-//GetAllSugarsByAuditId returns a list of all Sugars for a specific audit id
-func (s *SugarService) GetAllSugarsByAuditId(approvedOnly bool, auditId string) []models.Sugar {
+//GetAllSugarsByAuditID returns a list of all Sugars for a specific audit id
+func (s *SugarService) GetAllSugarsByAuditID(approvedOnly bool, auditID string) []models.Sugar {
 	sugars := make([]models.Sugar, 0)
 	if approvedOnly {
-		s.db.Preload(clause.Associations).Find(&sugars, "approved = ? AND audit_id = ?", approvedOnly, auditId)
+		s.db.Preload(clause.Associations).Find(&sugars, "approved = ? AND audit_id = ?", approvedOnly, auditID)
 	} else {
-		s.db.Preload(clause.Associations).Find(&sugars, "audit_id = ?", auditId)
+		s.db.Preload(clause.Associations).Find(&sugars, "audit_id = ?", auditID)
 	}
 	return sugars
 }
 
 //CreateSugar creates a new Sugar and returns it
-func (s *SugarService) CreateSugar(name string, gravityPerPound float32, auditId string) models.Sugar {
+func (s *SugarService) CreateSugar(name string, gravityPerPound float32, auditID string) models.Sugar {
 	y := &models.Sugar{
 		Name:            name,
 		GravityPerPound: gravityPerPound,
-		Base:            models.Base{AuditId: auditId, Approved: false},
+		Base:            models.Base{AuditID: auditID, Approved: false},
 	}
 	s.db.Create(y)
 	return *y

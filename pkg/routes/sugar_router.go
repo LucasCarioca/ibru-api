@@ -23,7 +23,7 @@ type SugarRouter struct {
 type CreateSugarRequest struct {
 	Name            string  `json:"name" binding:"required"`
 	GravityPerPound float32 `json:"gravity_per_pound" binding:"required"`
-	AuditId         string  `json:"audit_id" binding:"required"`
+	AuditID         string  `json:"audit_id" binding:"required"`
 }
 
 //NewSugarRouter creates a new instance of the Sugar router
@@ -45,10 +45,10 @@ func (r *SugarRouter) getAllSugars(ctx *gin.Context) {
 	if err != nil {
 		approved = true
 	}
-	auditId := ctx.Query("audit_id")
+	auditID := ctx.Query("audit_id")
 	sugars := make([]models.Sugar, 0)
-	if auditId != "" {
-		sugars = r.gs.GetAllSugarsByAuditId(approved, auditId)
+	if auditID != "" {
+		sugars = r.gs.GetAllSugarsByAuditID(approved, auditID)
 	} else {
 		sugars = r.gs.GetAllSugars(approved)
 	}
@@ -62,7 +62,7 @@ func (r *SugarRouter) createSugar(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid request body: some or all fields are missing or incorrect", "error": "INVALID_REQUEST_BODY"})
 		return
 	}
-	g := r.gs.CreateSugar(data.Name, data.GravityPerPound, data.AuditId)
+	g := r.gs.CreateSugar(data.Name, data.GravityPerPound, data.AuditID)
 	ctx.JSON(http.StatusOK, g)
 }
 

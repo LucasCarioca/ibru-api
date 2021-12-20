@@ -27,7 +27,7 @@ type CreateYeastRequest struct {
 	Attenuation  string `json:"attenuation" binding:"required"`
 	Flocculation string `json:"flocculation" binding:"required"`
 	Temperature  string `json:"temperature" binding:"required"`
-	AuditId      string `json:"audit_id" binding:"required"`
+	AuditID      string `json:"audit_id" binding:"required"`
 }
 
 //NewYeastRouter creates a new instance of the Yeast router
@@ -49,10 +49,10 @@ func (r *YeastRouter) getAllYeasts(ctx *gin.Context) {
 	if err != nil {
 		approved = true
 	}
-	auditId := ctx.Query("audit_id")
+	auditID := ctx.Query("audit_id")
 	yeasts := make([]models.Yeast, 0)
-	if auditId != "" {
-		yeasts = r.gs.GetAllYeastsByAuditId(approved, auditId)
+	if auditID != "" {
+		yeasts = r.gs.GetAllYeastsByAuditID(approved, auditID)
 	} else {
 		yeasts = r.gs.GetAllYeasts(approved)
 	}
@@ -66,7 +66,7 @@ func (r *YeastRouter) createYeast(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid request body: some or all fields are missing or incorrect", "error": "INVALID_REQUEST_BODY"})
 		return
 	}
-	g := r.gs.CreateYeast(data.Name, data.Brand, data.Temperature, data.Attenuation, data.Flocculation, data.Temperature, data.AuditId)
+	g := r.gs.CreateYeast(data.Name, data.Brand, data.Temperature, data.Attenuation, data.Flocculation, data.Temperature, data.AuditID)
 	ctx.JSON(http.StatusOK, g)
 }
 

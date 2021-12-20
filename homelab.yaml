@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: ibru
+  name: ibru-api-deployment
+  labels:
+    app: ibru-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ibru-api
+  template:
+    metadata:
+      labels:
+        app: ibru-api
+    spec:
+      containers:
+        - name: ibru-api
+          image: ghcr.io/lucascarioca/ibru-api:latest
+          ports:
+            - containerPort: 80
+              name: ibru-http
+          env:
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: ibru-db
+                  key: API_KEY
+            - name: ENV
+              valueFrom:
+                secretKeyRef:
+                  name: ibru-db
+                  key: ENV
+            - name: PG_DB
+              valueFrom:
+                secretKeyRef:
+                  name: ibru-db
+                  key: PG_DB
+            - name: PG_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: ibru-db
+                  key: PG_HOST
+            - name: PG_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: ibru-db
+                  key: PG_PASS
+            - name: PG_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: ibru-db
+                  key: PG_PORT
+            - name: PG_SSL
+              valueFrom:
+                secretKeyRef:
+                  name: ibru-db
+                  key: PG_SSL
+            - name: PG_TIMEZONE
+              valueFrom:
+                secretKeyRef:
+                  name: ibru-db
+                  key: PG_TIMEZONE
+            - name: PG_USER
+              valueFrom:
+                secretKeyRef:
+                  name: ibru-db
+                  key: PG_USER
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: ibru
+  name: ibru-api
+spec:
+  type: NodePort
+  ports:
+    - name: tcp
+      port: 80
+      nodePort: 30004
+      targetPort: ibru-http
+  selector:
+    app: ibru-api
