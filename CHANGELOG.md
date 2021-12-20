@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/LucasCarioca/ibru-api/compare/v1.0.0...v1.0.1) (2021-12-20)
+
+
+### Bug Fixes
+
+* change port and release ([9fe5002](https://github.com/LucasCarioca/ibru-api/commit/9fe5002b50f1b600fbe657ef53b86ef67f5964ad))
+
 # 1.0.0 (2021-12-20)
 
 
