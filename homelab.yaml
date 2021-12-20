@@ -78,7 +78,7 @@ spec:
   ports:
     - name: tcp
       port: 80
-      nodePort: 30004
+      nodePort: 30006
       targetPort: ibru-http
   selector:
     app: ibru-api
